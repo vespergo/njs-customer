@@ -36,12 +36,41 @@ const seedInvoices = () => {
         db.run('INSERT INTO invoices (customer_id, amount) VALUES (?, ?)', [invoice.customer_id, invoice.amount]);
     });
 };
+// Funtion to seed Media files
+const seedMedia = () => {
+    const media = [
+        {   
+            user_id: 1,
+            location:'/media/file1', 
+            picture_location: 'media/file1/picture',
+            name: "file1"
+        },
+        {   
+            user_id: 1,
+            location:'/media/file2', 
+            picture_location: 'media/file2/picture',
+            name: "file2"
+        },
+        {   
+            user_id: 2,
+            location:'/media/file3', 
+            picture_location: 'media/file3/picture',
+            name: "file3"
+        },
+    ];
+    media.forEach(media => {
+        db.run(
+            'INSERT INTO media (user_id, location, picture_location, name) VALUES (?, ?, ?, ?)', 
+            [media.user_id, media.location, media.picture_location, media.name]);
+    });
+};
 
 db.serialize(() => {
     db.run('PRAGMA foreign_keys=ON');
     seedUsers();
     seedCustomers();
     seedInvoices();
+    seedMedia();
 });
 
 db.close();
