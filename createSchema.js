@@ -36,11 +36,25 @@ CREATE TABLE IF NOT EXISTS invoices (
 );
 `;
 
+
+const createMediaTable= `
+CREATE TABLE IF NOT EXISTS media (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    location TEXT UNIQUE NOT NULL,
+    picture_location TEXT NOT NULL,
+    name TEXT UNIQUE NOT NULL,
+    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+`;
+
 // Execute the SQL statements to create tables
 db.serialize(() => {
     db.run(createUserTable);
     db.run(createCustomerTable);
     db.run(createInvoiceTable);
+    db.run(createMediaTable);
 });
 
 // Close the database connection
